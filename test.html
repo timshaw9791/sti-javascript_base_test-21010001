@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="test/lib/mocha.css" />
+  </head>
+
+  <body>
+    <div id="mocha"></div>
+    <script src="test/lib/chai.js"></script>
+    <script src="test/lib/mocha.js"></script>
+    <script src="lodash.js"></script>
+
+    <script src="1_expression.js"></script>
+    <script src="2_control.js"></script>
+    <script src="3_function.js"></script>
+    <script src="4_object.js"></script>
+    <script src="5_highorderfunction.js"></script>
+
+    <script class="mocha-init">
+      mocha.setup('bdd');
+      mocha.checkLeaks();
+    </script>
+
+    <script src="test/test_1.js"></script>
+    <script src="test/test_2.js"></script>
+    <script src="test/test_3.js"></script>
+    <script src="test/test_4.js"></script>
+    <script src="test/test_5.js"></script>
+
+
+    <script class="mocha-exec">
+      var expect = chai.expect;
+      mocha.run();
+    </script>
+  </body>
+
+</html>
