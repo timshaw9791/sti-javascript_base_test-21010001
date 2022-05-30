@@ -14,6 +14,7 @@
     <script src="test/lib/mocha.js"></script>
     <script src="lodash.js"></script>
 
+
     <script src="1_expression.js"></script>
     <script src="2_control.js"></script>
     <script src="3_function.js"></script>
@@ -35,6 +36,66 @@
     <script class="mocha-exec">
       var expect = chai.expect;
       mocha.run();
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+      const grades = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 10, 10]
+      console.log(grades.reduce((x, item) => x + item, 0));
+      /**
+        *
+        * node - 是含有<li class="suite"/><h1>标题</h1><ul><li></li></ul></li>
+        * 返回各测试通过与否的数组
+        **/
+      const buildReport = function () {
+        const testResultArray = []
+        const nodeCollection = $("ul#mocha-report");
+
+        if (nodeCollection.length) {
+          nodeCollection.find(">li").each(function () {
+            buildSuite($(this), testResultArray);
+          })
+        }
+        return testResultArray;
+      }
+
+      /**
+       *
+       * node - 是含有<li class="suite"/><h1>标题</h1><ul><li></li></ul></li>
+       * 
+       **/
+      const buildSuite = function (node, testResultArray) {
+        //获取标题
+        const title = node.find(">h1>a").text();
+
+
+        node.find('>ul>li').each(function (element) {
+          const linode = $(this);
+          if (linode.hasClass('suite')) {
+            buildSuite($(this), testResultArray)
+          } else if (linode.hasClass('test')) {
+            test = buildTest(linode);
+            testResultArray.push(test);
+
+          }
+        })
+
+      }
+
+      const buildTest = (node) => {
+        const passed = node.hasClass("pass")
+        const title = node.find(">h2").text();
+        //获取标题
+        return { title, passed };
+      }
+      window.setTimeout(() => {
+        const testResultArray = buildReport();
+        const array = testResultArray.map((item, idx) => (item.passed ? 1 : 0) * grades[idx])
+        console.log(testResultArray);
+        console.log(array);
+        const grade = array.reduce((t, item) => t + item, 0);
+        console.log(grade);
+      }, 3000)
     </script>
   </body>
 
